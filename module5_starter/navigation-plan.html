@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Navigation Plan and Evidence | The Heritage Museum</title>
+  <style>
+    :root { color-scheme: light; --brand:#075b5b; --accent:#e5b95c; --ink:#193536; --paper:#fffdf7; }
+    * { box-sizing: border-box; }
+    body { max-width: 78rem; margin: auto; padding: clamp(1rem, 3vw, 2rem); color:var(--ink); background:var(--paper); font:1rem/1.6 system-ui,sans-serif; }
+    h1,h2,h3 { color:#063f42; line-height:1.2; }
+    h1 { font-size:clamp(2rem,5vw,3rem); }
+    table { width:100%; border-collapse:collapse; margin-block:1rem 2rem; }
+    th,td { border:1px solid #9eb8ae; padding:.65rem; text-align:left; vertical-align:top; }
+    th { color:white; background:var(--brand); }
+    code { overflow-wrap:anywhere; }
+    .note { padding:1rem; background:#edf5f1; border-inline-start:.35rem solid var(--accent); }
+    .pending { color:#684b08; font-weight:700; }
+    @media (max-width: 42rem) { table { display:block; overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <h1>Navigation Plan and Evidence</h1>
+  <p><strong>Site:</strong> The Heritage Museum — a small informational museum website that helps visitors plan a visit, discover what is on view, and learn how to support preservation.</p>
+
+  <h2>1. Priority tasks and content inventory</h2>
+  <ol>
+    <li>Visitors want to plan a museum visit and find practical visitor information.</li>
+    <li>Visitors want to discover exhibitions, events, and collection highlights.</li>
+    <li>Community members want to learn how to support the museum's preservation and public-program work.</li>
+  </ol>
+  <table>
+    <thead><tr><th>Destination</th><th>Final label</th><th>Order/group rationale</th></tr></thead>
+    <tbody>
+      <tr><td>Home</td><td>Home</td><td>First item; returns visitors to the site's overview and the museum's main content.</td></tr>
+      <tr><td>Visitor information</td><td>Plan Your Visit</td><td>Second because planning a visit is a primary visitor task; opens visit.html.</td></tr>
+      <tr><td>Exhibition information</td><td>Exhibitions</td><td>Groups discovery content near the beginning; links to the exhibition section on the Home page.</td></tr>
+      <tr><td>Program information</td><td>Events</td><td>Follows exhibitions as another way to discover what the museum offers; links to the events section on the Home page.</td></tr>
+      <tr><td>Object and archive information</td><td>Collections</td><td>Completes the discovery group; links to the collections section on the Home page.</td></tr>
+      <tr><td>Ways to help</td><td>Get Involved</td><td>Placed last as a secondary community-action task; opens support.html.</td></tr>
+    </tbody>
+  </table>
+  <p class="note">The same six destinations appear in the same order on all three pages. The three discovery destinations use working in-page links on index.html, while the three HTML documents remain Home, Visit, and Support.</p>
+
+  <h2>2. Interaction and failure test record</h2>
+  <table>
+    <thead><tr><th>Condition</th><th>Expected</th><th>Observed</th><th>Result and repair</th></tr></thead>
+   <tbody>
+  <tr>
+    <td>Keyboard: Tab to button, Enter/Space, Escape, focus return</td>
+    <td>Native button opens/closes the list; aria-expanded matches visibility; Escape closes and returns focus to the button.</td>
+    <td>Tab moved focus to the Menu button. Enter and Space opened the menu. Escape closed it and returned focus to the button.</td>
+    <td>Pass. Native keyboard interaction worked as expected.</td>
+  </tr>
+
+  <tr>
+    <td>Pointer and touch targets</td>
+    <td>Menu button and links have comfortable target height, visible hover/active feedback, and no overlap.</td>
+    <td>Hover and keyboard-focus effects were visible. Menu button and navigation links had comfortable target sizes and spacing.</td>
+    <td>Pass. Targets and interaction states were usable.</td>
+  </tr>
+
+  <tr>
+    <td>320 CSS-pixel viewport and breakpoint region</td>
+    <td>Header and links fit without horizontal page scrolling or clipped text; narrow menu remains usable.</td>
+    <td>At 320px, the header and navigation fit. All six links remained accessible without clipping or horizontal scrolling.</td>
+    <td>Pass. Narrow layout remained usable.</td>
+  </tr>
+
+  <tr>
+    <td>200% browser zoom</td>
+    <td>Content reflows; links remain available; focus is not clipped or obscured.</td>
+    <td>At 200% zoom, the header remained readable and the navigation continued to work without visible overlap.</td>
+    <td>Pass. Layout remained usable.</td>
+  </tr>
+
+  <tr>
+    <td>JavaScript unavailable</td>
+    <td>Menu button remains hidden and every navigation link is visible and usable.</td>
+    <td>With JavaScript disabled, all six navigation links remained visible and accessible.</td>
+    <td>Pass. Navigation preserved access without JavaScript.</td>
+  </tr>
+
+  <tr>
+      <td>CSS unavailable / wide-layout recovery</td>
+    <td>Without CSS, the native link list remains in document flow. At wide width, links remain visible even if the narrow menu was last closed.</td>
+    <td>With CSS disabled, all six navigation links remained visible. After re-enabling CSS and JavaScript, closing the mobile menu and widening to 1024px displayed all six links automatically.</td>
+    <td>Pass. Native navigation and wide-layout recovery worked correctly.</td>
+  </tr>
+</tbody>
+  </table>
+
+  <h2>3. Peer task test</h2>
+  <p><strong>Tester relationship:</strong> <span class="pending">Mother</span></p>
+  <p><strong>Two tasks attempted:</strong> Asked the tester to (1) find the information needed to plan a visit and (2) find how to support the museum.</p>
+  <p><strong>What the tester did or said:</strong> <span class="pending">Clicked "Plan a Visit" link for first task, and "Get Support" for second task.</span></p>
+  <p><strong>Change made or justified:</strong> <span class="pending">Tester suggested changing wording on "Get Support" so people do not mistake it for Contact Support. Changed the wording to "Get Involved".</span></p>
+
+  <h2>4. JavaScript code defense</h2>
+  <p>The script first selects the native <code>.menu-button</code> and the <code>#primary-nav</code> list. It checks that both elements exist before enhancing the page. Only then does it remove the button's <code>hidden</code> state, set <code>data-enhanced="true"</code> on the navigation landmark, and initialize the list with <code>data-state="closed"</code>. This order preserves the native baseline: if JavaScript is unavailable, the button stays hidden and the list remains visible.</p>
+  <p>The named <code>setMenuOpen(isOpen)</code> function synchronizes two states: it updates the button's <code>aria-expanded</code> attribute to the string <code>"true"</code> or <code>"false"</code>, and updates the list's <code>data-state</code> to <code>"open"</code> or <code>"closed"</code>. CSS uses that data state to hide the list only in the enhanced narrow layout. The native button's <code>click</code> event toggles the state, so browser-native Enter and Space activation work without custom keyboard code.</p>
+  <p>A document-level <code>keydown</code> listener checks for the <code>Escape</code> key while the menu is open in the narrow layout. It calls <code>setMenuOpen(false)</code> and then <code>button.focus()</code>, closing the list and returning keyboard focus to its control. A wide-layout media query forces the list to display and hides the disclosure button, so a previous narrow state cannot hide the wide navigation.</p>
+
+  <h2>5. AI disclosure</h2>
+    <p>
+    <strong>Tool and purpose, or none:</strong>
+    AI was used to help brainstorm the fictional museum website, guidance for Javascript, as well as used to generate a fake museum image for background.
+  </p>
+</html>
